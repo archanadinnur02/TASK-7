@@ -1,0 +1,27 @@
+Objective
+Pull basic sales info like total quantity sold and total revenue from an SQLite database and visualize it using a bar chart.
+
+## Tools Used
+- Python (sqlite3, pandas, matplotlib)
+- SQLite
+- Jupyter Notebook or .py script
+
+## Steps Performed
+1. Connected to `sales_data.db` using sqlite3.
+2. Ran a SQL query to group sales by product and calculate total quantity and revenue.
+3. Loaded results into a pandas DataFrame.
+4. Displayed the results using print.
+5. Plotted revenue by product using matplotlib.
+
+## How to Run
+1. Make sure `sales_data.db` is in the same folder.
+2. Run `python sales_summary.py`
+3. Output will be printed and a bar chart will be saved as `sales_chart.png`.
+
+## Sample Output
+
+Sales Summary:
+product total_qty revenue
+0 Apple 15 7.5
+1 Banana 35 10.5
+2 Orange 15 12.0
