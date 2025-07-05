@@ -1,0 +1,79 @@
+Step-by-Step Python Script
+Filename: sales_summary.py (or you can use a Jupyter notebook)
+
+# sales_summary.py
+
+import sqlite3
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Connect to SQLite database
+conn = sqlite3.connect("sales_data.db")
+
+# Query to get total quantity and revenue per product
+query = """
+SELECT 
+    product, 
+    SUM(quantity) AS total_qty, 
+    SUM(quantity * price) AS revenue 
+FROM sales 
+GROUP BY product
+"""
+
+# Load the query result into a DataFrame
+df = pd.read_sql_query(query, conn)
+
+# Print the summary DataFrame
+print("Sales Summary:")
+print(df)
+
+# Create a bar chart for revenue by product
+df.plot(kind='bar', x='product', y='revenue', legend=False, color='skyblue')
+plt.title("Revenue by Product")
+plt.ylabel("Revenue ($)")
+plt.xlabel("Product")
+plt.tight_layout()
+plt.savefig("sales_chart.png")
+plt.show()
+
+# Close the database connection
+conn.close()
+🧪 Sample SQLite Setup (if needed)
+If you don’t have a sales_data.db yet, you can create one using:
+
+import sqlite3
+
+conn = sqlite3.connect("sales_data.db")
+cursor = conn.cursor()
+
+# Create table
+cursor.execute('''
+CREATE TABLE sales (
+    id INTEGER PRIMARY KEY,
+    product TEXT,
+    quantity INTEGER,
+    price REAL
+)
+''')
+
+# Insert sample data
+sales_data = [
+    ('Apple', 10, 0.5),
+    ('Apple', 5, 0.5),
+    ('Banana', 20, 0.3),
+    ('Banana', 15, 0.3),
+    ('Orange', 7, 0.8),
+    ('Orange', 8, 0.8)
+]
+
+cursor.executemany('INSERT INTO sales (product, quantity, price) VALUES (?, ?, ?)', sales_data)
+conn.commit()
+conn.close()
+
+📁 GitHub Submission Structure
+ask7-sales-summary/
+├── sales_data.db             # SQLite database
+├── sales_summary.py          # Python script
+├── sales_chart.png           # Bar chart output
+├── README.md                 # Explanation of what you did
+└── .gitignore                # Optional, exclude pycache etc.
